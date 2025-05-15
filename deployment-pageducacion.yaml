@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pageducacion-deployment
+  labels:
+    app: pageducacion
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pageducacion
+  template:
+    metadata:
+      labels:
+        app: pageducacion
+    spec:
+      containers:
+      - name: pageducacion
+        image: sadamquispe/pageducacion:latest
+        ports:
+        - containerPort: 3000
+          name: pageducacion-port
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.2"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pageducacion-service
+  labels:
+    app: pageducacion
+spec:
+  selector:
+    app: pageducacion
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30300
+  type: NodePort
