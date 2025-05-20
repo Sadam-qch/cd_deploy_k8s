@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:21-alpine'
+    }
+  }
   
   environment {
     DOCKER_IMAGE = 'sadamquispe/pageducacion'
