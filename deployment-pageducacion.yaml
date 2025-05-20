@@ -19,7 +19,7 @@ spec:
         image: sadamquispe/pageducacion:latest
         ports:
         - containerPort: 3000
-          name: pageducacion-port
+          name: page-port
         resources:
           limits:
             cpu: "0.5"
