@@ -9,9 +9,7 @@ pipeline {
   stages {
     stage('Verificar Versiones') {
       steps {
-        sh '''curl -fsSL https://deb.nodesource.com/setup_21.x | sudo -E bash -
-sudo apt-get update
-sudo apt-get install -y nodejs
+        sh '''apk add --no-cache nodejs npm
 node --version
 npm --version
 git --version'''
