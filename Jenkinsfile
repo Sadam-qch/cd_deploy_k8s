@@ -1,9 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:21-alpine'
-    }
-  }
+  agent any
   
   environment {
     DOCKER_IMAGE = 'sadamquispe/pageducacion'
@@ -13,7 +9,10 @@ pipeline {
   stages {
     stage('Verificar Versiones') {
       steps {
-        sh '''node --version
+        sh '''curl -fsSL https://deb.nodesource.com/setup_21.x | sudo -E bash -
+sudo apt-get update
+sudo apt-get install -y nodejs
+node --version
 npm --version
 git --version'''
       }
