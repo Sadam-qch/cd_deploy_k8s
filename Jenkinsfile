@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:21-slim'
+      args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
+  }
   
   environment {
     DOCKER_IMAGE = 'sadamquispe/pageducacion'
@@ -7,9 +12,12 @@ pipeline {
   }
   
   stages {
-    stage('Verificar Versiones') {
+    stage('Preparar Entorno') {
       steps {
-        sh '''apk add --no-cache nodejs npm
+        sh '''apt-get update && apt-get install -y curl git
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+mv kubectl /usr/local/bin/
 node --version
 npm --version
 git --version'''
